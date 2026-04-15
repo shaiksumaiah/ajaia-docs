@@ -5,9 +5,10 @@
 - [x] README.md (Setup & Run)
 - [x] ARCHITECTURE.md (Technical overview)
 - [x] AI_WORKFLOW.md (AI usage documentation)
-- [x] Persistence (Local `db.json`)
-- [ ] Live URL (Pending deployment)
+- [x] Persistence (Supabase Cloud + local fallback)
+- [x] Live URL: [https://ajaia-docs-mz2a-coral.vercel.app/](https://ajaia-docs-mz2a-coral.vercel.app/)
 - [ ] Walkthrough Video (To be recorded by user)
+
 
 ## Core Capabilities Status
 - **Document Creation/Editing:** Fully Functional

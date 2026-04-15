@@ -1,5 +1,8 @@
 # Ajaia Collab Docs
 
+**Live Demo:** [https://ajaia-docs-mz2a-coral.vercel.app/](https://ajaia-docs-mz2a-coral.vercel.app/)
+
+
 A lightweight, collaborative document editor built with Next.js and Tiptap.
 
 ## Features
@@ -7,7 +10,8 @@ A lightweight, collaborative document editor built with Next.js and Tiptap.
 - **Rich Text Editor:** Powered by Tiptap (Bold, Italic, Headings, Lists).
 - **File Upload:** Import `.txt` and `.md` files as new documents.
 - **Sharing:** Mock authentication and document sharing system (Alice & Bob).
-- **Persistence:** Local JSON-based database (`db.json`).
+- **Persistence:** Supabase (Cloud) / JSON-based database (`db.json`) for local testing.
+
 
 ## Local Setup
 
@@ -32,5 +36,6 @@ The app uses mock authentication. You can "switch" users by logging out and typi
 ## Tech Stack
 - **Frontend:** Next.js (App Router), Vanilla CSS Modules
 - **Editor:** Tiptap
-- **Persistence:** Node.js `fs` (db.json)
+- **Persistence:** Supabase (PostgreSQL) / Node.js `fs` (local)
+
 - **Icons:** Lucide React
