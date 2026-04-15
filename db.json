@@ -1,0 +1,50 @@
+{
+  "users": [
+    {
+      "id": "user_1",
+      "name": "Alice",
+      "email": "alice@example.com"
+    },
+    {
+      "id": "user_2",
+      "name": "Bob",
+      "email": "bob@example.com"
+    }
+  ],
+  "documents": [
+    {
+      "id": "1",
+      "title": "Getting Started",
+      "content": "<h1><em>shaik sumaiahGetting Started</em></h1><ol><li><p><em>Welcome to Ajaia Docs!</em></p></li></ol><p></p>",
+      "ownerId": "user_1",
+      "updatedAt": "2026-04-15T18:20:52.117Z",
+      "collaborators": []
+    },
+    {
+      "id": "d6xvudk69",
+      "title": "shaik sumaiah",
+      "content": "<h1></h1><ol><li><p><strong><em><u>Start writing...shaik sumaiah</u></em></strong></p></li></ol><p></p>",
+      "ownerId": "user_1",
+      "updatedAt": "2026-04-15T18:27:19.986Z",
+      "collaborators": []
+    },
+    {
+      "id": "w1fk0bgny",
+      "title": "Untitled Document",
+      "content": "<h1>Untitled Document</h1><h1><strong><em><u>Start writing...shaik sumaiah</u></em></strong></h1><ol><li><p></p></li></ol><p></p>",
+      "ownerId": "user_1",
+      "updatedAt": "2026-04-15T18:21:28.264Z",
+      "collaborators": [
+        "user_2"
+      ]
+    },
+    {
+      "id": "c6dk2x2xu",
+      "title": "Untitled Document",
+      "content": "<h1>Untitled Document</h1><p>Start writing...</p>",
+      "ownerId": "user_1",
+      "updatedAt": "2026-04-15T18:35:56.570Z",
+      "collaborators": []
+    }
+  ]
+}

@@ -1,5 +1,5 @@
 {
-  "name": "ajaia-docs",
+  "name": "ajaia-collab-docs",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,16 +9,29 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@prisma/client": "^7.7.0",
+    "@tiptap/extension-underline": "^3.22.3",
+    "@tiptap/react": "^3.22.3",
+    "@tiptap/starter-kit": "^3.22.3",
+    "clsx": "^2.1.1",
+    "lucide-react": "^1.8.0",
     "next": "16.2.3",
     "react": "19.2.4",
-    "react-dom": "19.2.4"
+    "react-dom": "19.2.4",
+    "tailwind-merge": "^3.5.0"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@vitejs/plugin-react": "^6.0.1",
     "eslint": "^9",
     "eslint-config-next": "16.2.3",
-    "typescript": "^5"
+    "jsdom": "^29.0.2",
+    "prisma": "^7.7.0",
+    "typescript": "^5",
+    "vitest": "^4.1.4"
   }
 }
