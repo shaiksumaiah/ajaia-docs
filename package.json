@@ -9,7 +9,6 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "@prisma/client": "^7.7.0",
     "@tiptap/extension-underline": "^3.22.3",
     "@tiptap/react": "^3.22.3",
     "@tiptap/starter-kit": "^3.22.3",
@@ -30,7 +29,6 @@
     "eslint": "^9",
     "eslint-config-next": "16.2.3",
     "jsdom": "^29.0.2",
-    "prisma": "^7.7.0",
     "typescript": "^5",
     "vitest": "^4.1.4"
   }
