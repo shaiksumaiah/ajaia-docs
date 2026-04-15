@@ -57,7 +57,7 @@ export async function getDocument(id: string) {
   if (error || !doc) return null;
 
   // Manual join simulation for collaborators
-  const collaborators = [];
+  const collaborators: any[] = [];
   if (doc.collaborators && doc.collaborators.length > 0) {
     const { data: users } = await supabase
       .from('users')
