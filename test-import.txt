@@ -1,0 +1,6 @@
+Ajaia Collaborative Editor Test File
+
+This is a simple text file import.
+It demonstrates that our app can handle plain text and convert it into a rich-text document automatically.
+
+Test successful!

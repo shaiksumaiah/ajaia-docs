@@ -1,4 +1,6 @@
+export const dynamic = 'force-dynamic';
 import EditClient from './EditClient';
+
 import { getDocument } from '@/lib/actions';
 import { notFound } from 'next/navigation';
 

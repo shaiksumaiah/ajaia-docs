@@ -12,6 +12,7 @@ export default function Editor({ content, onChange }: { content: string, onChang
       StarterKit,
       Underline,
     ],
+
     content: content,
     immediatelyRender: false,
     onUpdate: ({ editor }) => {

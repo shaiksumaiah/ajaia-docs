@@ -1,4 +1,6 @@
+export const dynamic = 'force-dynamic';
 import Dashboard from '@/components/Dashboard/Dashboard';
+
 import { getMyDocuments } from '@/lib/actions';
 
 export default async function Home() {

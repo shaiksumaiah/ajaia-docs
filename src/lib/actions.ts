@@ -1,78 +1,119 @@
 'use server';
 
-import { readDb, writeDb, Document } from './db';
+import { supabaseAdmin as supabase } from './supabase';
 import { revalidatePath } from 'next/cache';
 
 export async function createDocument(title: string, ownerId: string, initialContent?: string) {
-  const db = await readDb();
-  const newDoc: Document = {
-    id: Math.random().toString(36).substr(2, 9),
-    title,
-    content: initialContent || `<h1>${title}</h1><p>Start writing...</p>`,
-    ownerId,
-    updatedAt: new Date().toISOString(),
-    collaborators: []
-  };
-  db.documents.push(newDoc);
-  await writeDb(db);
+  const { data, error } = await supabase
+    .from('documents')
+    .insert([{
+      title,
+      content: initialContent || `<h1>${title}</h1><p>Start writing...</p>`,
+      owner_id: ownerId,
+      updated_at: new Date().toISOString(),
+      collaborators: []
+    }])
+    .select()
+    .single();
+
+  if (error) throw error;
   revalidatePath('/');
-  return newDoc;
+  return data;
 }
 
 export async function renameDocument(id: string, title: string) {
-  const db = await readDb();
-  const index = db.documents.findIndex(d => d.id === id);
-  if (index !== -1) {
-    db.documents[index].title = title;
-    db.documents[index].updatedAt = new Date().toISOString();
-    await writeDb(db);
-  }
+  const { data, error } = await supabase
+    .from('documents')
+    .update({ title, updated_at: new Date().toISOString() })
+    .eq('id', id)
+    .select()
+    .single();
+
+  if (error) throw error;
   revalidatePath('/');
   revalidatePath(`/edit/${id}`);
-  return db.documents[index];
+  return data;
 }
 
 export async function updateDocument(id: string, content: string) {
-  const db = await readDb();
-  const index = db.documents.findIndex(d => d.id === id);
-  if (index !== -1) {
-    db.documents[index].content = content;
-    db.documents[index].updatedAt = new Date().toISOString();
-    await writeDb(db);
-  }
-  return db.documents[index];
+  const { data, error } = await supabase
+    .from('documents')
+    .update({ content, updated_at: new Date().toISOString() })
+    .eq('id', id)
+    .select()
+    .single();
+
+  if (error) throw error;
+  return data;
 }
 
 export async function getDocument(id: string) {
-  const db = await readDb();
-  const doc = db.documents.find(d => d.id === id);
-  if (!doc) return null;
-  
-  const collaborators = doc.collaborators.map(cid => {
-    const user = db.users.find(u => u.id === cid);
-    return { user };
-  });
+  const { data: doc, error } = await supabase
+    .from('documents')
+    .select('*')
+    .eq('id', id)
+    .single();
 
-  return { ...doc, collaborators };
+  if (error || !doc) return null;
+
+  // Manual join simulation for collaborators
+  const collaborators = [];
+  if (doc.collaborators && doc.collaborators.length > 0) {
+    const { data: users } = await supabase
+      .from('users')
+      .select('*')
+      .in('id', doc.collaborators);
+    
+    if (users) {
+      users.forEach(user => collaborators.push({ user }));
+    }
+  }
+
+  return { ...doc, ownerId: doc.owner_id, updatedAt: doc.updated_at, collaborators };
 }
 
 export async function getMyDocuments(userId: string) {
-  const db = await readDb();
-  return db.documents.filter(d => d.ownerId === userId || d.collaborators.includes(userId));
+  const { data, error } = await supabase
+    .from('documents')
+    .select('*')
+    .or(`owner_id.eq.${userId},collaborators.cs.{${userId}}`);
+
+  if (error) return [];
+  return data.map(doc => ({
+    ...doc,
+    ownerId: doc.owner_id,
+    updatedAt: doc.updated_at,
+    shared: doc.owner_id !== userId
+  }));
 }
 
 export async function shareDocument(docId: string, email: string) {
-  const db = await readDb();
-  const user = db.users.find(u => u.email === email);
-  if (!user) throw new Error('User not found');
+  const { data: user, error: userError } = await supabase
+    .from('users')
+    .select('*')
+    .eq('email', email)
+    .single();
 
-  const doc = db.documents.find(d => d.id === docId);
+  if (userError || !user) throw new Error('User not found');
+
+  const { data: doc } = await supabase
+    .from('documents')
+    .select('collaborators')
+    .eq('id', docId)
+    .single();
+
   if (!doc) throw new Error('Document not found');
 
-  if (!doc.collaborators.includes(user.id)) {
-    doc.collaborators.push(user.id);
-    await writeDb(db);
+  const collaborators = doc.collaborators || [];
+  if (!collaborators.includes(user.id)) {
+    collaborators.push(user.id);
+    const { error } = await supabase
+      .from('documents')
+      .update({ collaborators })
+      .eq('id', docId);
+    if (error) throw error;
   }
+
   revalidatePath(`/edit/${docId}`);
   return user;
 }
